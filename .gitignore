@@ -24,3 +24,9 @@ hs_err_pid*
 
 # applicaiton.properties
 /**/**/*.properties
+
+.classpath
+.factorypath
+.project
+.settings/
+.vscode/
