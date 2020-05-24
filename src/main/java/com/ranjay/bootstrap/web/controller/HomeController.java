@@ -8,9 +8,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class HomeController {
     
-    // @GetMapping(value="/")
-    // public String home() {
-    //     return "index";
-    // }
+    @GetMapping(value="/")
+    public String home() {
+        return "index";
+    }
+    
+    @GetMapping(value="/login")
+    public String showLogin() {
+        return "views/loginForm";
+    }
     
 }

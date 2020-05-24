@@ -3,6 +3,7 @@ package com.ranjay.bootstrap.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
@@ -12,13 +13,15 @@ import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
 import org.thymeleaf.templatemode.TemplateMode;
 
+import nz.net.ultraq.thymeleaf.LayoutDialect;
+
 /**
  * WebConfig
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = {"com.ranjay"})
-@EnableJpaRepositories(basePackages = {"com.ranjay.bootstrap.repository"})
+@ComponentScan(basePackages = { "com.ranjay" })
+@EnableJpaRepositories(basePackages = { "com.ranjay.bootstrap.repository" })
 public class WebConfig implements WebMvcConfigurer {
 
     /* ******************************************************************* */
@@ -69,6 +72,7 @@ public class WebConfig implements WebMvcConfigurer {
         // across different data types, so this flag is "false" by default
         // for safer backwards compatibility.
         templateEngine.setEnableSpringELCompiler(true);
+        templateEngine.addDialect(layoutDialect());
         return templateEngine;
     }
 
@@ -77,6 +81,18 @@ public class WebConfig implements WebMvcConfigurer {
         ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
         viewResolver.setTemplateEngine(templateEngine());
         return viewResolver;
+    }
+
+    @Bean
+    public LayoutDialect layoutDialect() {
+        return new LayoutDialect();
+    }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource() {
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setBasename("Messages");
+        return messageSource;
     }
 
 }

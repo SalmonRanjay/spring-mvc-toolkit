@@ -20,19 +20,19 @@ public class CountryController {
     @Autowired
     private CountryRepository countryRepository;
 
-    @GetMapping(value="/")
+    @GetMapping(value="/country")
     public String showPage(Model model, @RequestParam(defaultValue = "0",name = "page") int page) {
 
         model.addAttribute("currentPage", page);
         model.addAttribute("data", countryRepository.findAll(PageRequest.of(page, 10)));
-        return "index";
+        return "country";
     }
 
     @PostMapping("/save")
     public String save(Country country){
         countryRepository.save(country);
 
-        return "redirect:/";
+        return "redirect:/country";
     }
 
     @GetMapping("/delete")
@@ -40,7 +40,7 @@ public class CountryController {
         Country country = countryRepository.findById(id).get();
         countryRepository.delete(country);
 
-        return "redirect:/";
+        return "redirect:/country";
     }
 
     @GetMapping("/findOne")

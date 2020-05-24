@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymealf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel='stylesheet' href='webjars/bootstrap/css/bootstrap.min.css' />
+</head>
+
+<body>
+    <div th:replace="fragments/header:: header"></div>
+
+    <div class="container">
+        <button class="btn btn-success nBtn">New</button>
+        <div class="card">
+            <div class="card-block">
+                <!-- TABLE -->
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Country</th>
+                            <th>Capital</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="country : ${data.content}">
+                            <td th:text="${country.id}"></td>
+                            <td th:text="${country.name}"></td>
+                            <td th:text="${country.capital}"></td>
+                            <td> <a th:href="@{/delete(id=${country.id})}" class="btn btn-danger delBtn">Delete</a></td>
+                            <td> <a th:href="@{/findOne(id=${country.id})}" class="btn btn-primary eBtn">Edit</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <hr>
+
+                <!-- Pagination -->
+                <ul class="nav nav-pills">
+                    <li class="nav-item" th:each="i : ${#numbers.sequence(0,data.totalPages-1)}">
+                        <a th:classappend="${currentPage} == ${i} ? 'active' : ''" th:href="@{/(page=${i})}" th:text="${i}" class="nav-link"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Modal Form -->
+        <div class="myForm">
+            <form th:action="@{/save}" method="POST">
+
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Create Or Update</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                     
+                        <div class="form-group" id="idForm">
+                          <label for="id" class="col-form-label">ID:</label>
+                          <input type="text" class="form-control" id="id" name="id" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="name" class="col-form-label">Name:</label>
+                          <input type="text" class="form-control" id="name" name="name" value="">
+                        </div>
+                        <div class="form-group">
+                          <label for="capital" class="col-form-label">Capital:</label>
+                          <input type="text" class="form-control" id="capital" name="capital" value="">
+                        </div>
+
+                        
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                      <input type="submit" class="btn btn-primary" value="Save" />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </form>
+        </div>
+
+        <div class="deleteForm">
+            <!-- Modal -->
+            <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLongTitle">Delete Country</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="alert alert-danger">Are you sure you want to delete this country?</p>
+                    </div>
+                    <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <a href="" class="btn btn-danger" id="delRef" >Delete</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+      
+        <script src="webjars/jquery/jquery.min.js"></script>
+        <script src="webjars/bootstrap/js/bootstrap.min.js"></script>
+        <script th:src="@{/js/main.js}"></script>
+    </footer>
+</body>
+</html>

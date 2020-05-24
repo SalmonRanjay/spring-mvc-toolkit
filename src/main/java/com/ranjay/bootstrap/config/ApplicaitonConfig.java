@@ -1,12 +1,14 @@
 package com.ranjay.bootstrap.config;
 
+import com.ranjay.bootstrap.security.SecurityConfig;
+
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class ApplicaitonConfig extends AbstractAnnotationConfigDispatcherServletInitializer {
 
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class<?>[] { RootConfig.class };
+        return new Class<?>[] { RootConfig.class, SecurityConfig.class };
     }
 
     @Override
