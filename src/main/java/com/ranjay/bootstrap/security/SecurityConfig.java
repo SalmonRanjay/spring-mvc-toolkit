@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final String LOGIN_ROUTE = "/login";
 
     private final String[] PERMITTED_PAGES = new String[] { "/register","/","/about", LOGIN_ROUTE, "/css/**",
-            "/webjars/**" };
+            "/webjars/**","/js/**" };
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -42,7 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
        
         // allow accuess to permited pages
         http.authorizeRequests().antMatchers(PERMITTED_PAGES).permitAll()
-        .anyRequest().authenticated()
+        .antMatchers("/profile","/country","/save","/delete","/findOne").hasAnyRole("USER,ADMIN")
+        .antMatchers("/users","/addTask").hasRole("ADMIN")
+        // .anyRequest().authenticated()
         .and().formLogin().loginPage(LOGIN_ROUTE).permitAll()
         .defaultSuccessUrl("/profile")
         .and().logout().logoutSuccessUrl(LOGIN_ROUTE);

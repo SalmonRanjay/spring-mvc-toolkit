@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en" 
+    xmlns:th="http://www.thymeleaf.org"
+    xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{fragments/main_layout.html}">
+<head>
+   
+</head>
+<body>
+    <div layout:fragment="content" class="container mySpace">
+        <div class="jumbotron">
+           There was an error | <span th:text="${message}"></span> <span class="text text-danger" th:text="${message}"></span>
+        </div>
+    </div>
+    <div>
+        Please Contact NHS for assistance 
+    </div>
+</body>
+</html>
